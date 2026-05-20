@@ -1,1 +1,918 @@
-# depsocial
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Social Quest – Departamento Social</title>
+
+  <!-- Tipografía tipo gamer -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #050016;
+      --bg-alt: #080026;
+      --card: #110033;
+      --accent: #7b5cff;
+      --accent-soft: #a98bff;
+      --accent-strong: #f5f0ff;
+      --green: #33ff99;
+      --green-soft: #9fffd6;
+      --text-main: #f9f5ff;
+      --text-muted: #b8b4d9;
+      --danger: #ff4f9a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #12003b, #050016 55%, #020008 100%);
+      color: var(--text-main);
+      font-family: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* Fondo tipo grid */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.6;
+      z-index: -2;
+    }
+
+    /* Estrellas sutiles */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(123,92,255,0.65) 0, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(51,255,153,0.35) 0, transparent 55%);
+      opacity: 0.45;
+      mix-blend-mode: screen;
+      z-index: -1;
+    }
+
+    .wrapper {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 32px 16px 72px;
+    }
+
+    section {
+      margin-bottom: 80px;
+    }
+
+    .pixel-title {
+      font-family: "Press Start 2P", system-ui, monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: center;
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      line-height: 1.3;
+      text-shadow:
+        0 0 12px rgba(123,92,255,0.9),
+        0 0 28px rgba(80,255,190,0.4);
+    }
+
+    .subpixel {
+      font-family: "Press Start 2P", system-ui, monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--green-soft);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(123,92,255,0.7);
+      background: radial-gradient(circle at top, rgba(123,92,255,0.4), rgba(5,0,22,0.95));
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-strong);
+    }
+
+    .tag::before,
+    .tag::after {
+      content: "✦";
+      font-size: 0.7rem;
+      color: var(--green-soft);
+    }
+
+    .text-muted {
+      color: var(--text-muted);
+    }
+
+    .grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    /* HERO */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 32px;
+      align-items: center;
+      margin-bottom: 96px;
+    }
+
+    @media (max-width: 880px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .hero-main h1 {
+      margin-top: 18px;
+      margin-bottom: 20px;
+    }
+
+    .hero-main p {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      max-width: 540px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      position: relative;
+      padding: 12px 22px;
+      border-radius: 999px;
+      border: none;
+      font-family: "Press Start 2P", system-ui, monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: radial-gradient(circle at top, #47ffb8, #0f8b5d);
+      color: #020008;
+      box-shadow:
+        0 0 16px rgba(71,255,184,0.8),
+        0 0 40px rgba(71,255,184,0.35);
+    }
+
+    .btn-primary::before {
+      content: "▶";
+      font-size: 0.62rem;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--accent-soft);
+      border: 1px solid rgba(169,139,255,0.85);
+    }
+
+    .btn-secondary::before {
+      content: "☰";
+      font-size: 0.7rem;
+    }
+
+    .hero-console {
+      position: relative;
+      border-radius: 28px;
+      padding: 20px 20px 24px;
+      background: radial-gradient(circle at top, #1b004c, #050016 75%);
+      border: 2px solid rgba(123,92,255,0.9);
+      box-shadow:
+        0 0 26px rgba(123,92,255,0.9),
+        0 0 60px rgba(12,255,176,0.4);
+      overflow: hidden;
+    }
+
+    .hero-console::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px dashed rgba(143,117,255,0.4);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .console-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-family: "Press Start 2P", system-ui, monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-strong);
+    }
+
+    .console-header span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .console-header span::before {
+      content: "▲";
+      color: var(--green-soft);
+    }
+
+    .lifebar {
+      display: inline-flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .lifebar-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      background: radial-gradient(circle, #ff79d1, #c01d83);
+      box-shadow: 0 0 10px rgba(255,121,209,0.8);
+    }
+
+    .lifebar-dot.off {
+      background: transparent;
+      border: 1px solid rgba(255,121,209,0.4);
+      box-shadow: none;
+    }
+
+    .console-players {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(143,117,255,0.5);
+      margin-bottom: 14px;
+      background: radial-gradient(circle at top, #1a0047, #050016 70%);
+    }
+
+    .avatar-panel {
+      padding: 18px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+    }
+
+    .avatar-panel + .avatar-panel {
+      border-left: 1px solid rgba(143,117,255,0.45);
+    }
+
+    .avatar-sprite {
+      width: 90px;
+      height: 90px;
+      border-radius: 12px;
+      background-size: cover;
+      background-position: center;
+      border: 2px solid rgba(143,117,255,0.9);
+      box-shadow:
+        0 0 16px rgba(143,117,255,0.9),
+        0 0 40px rgba(12,255,176,0.4);
+    }
+
+    /* Aquí pegas una versión recortada de tus avatares */
+    .avatar-1 { background-image: url("AVATAR_JULI.png"); }
+    .avatar-2 { background-image: url("AVATAR_AMIGA.png"); }
+
+    .avatar-label {
+      font-family: "Press Start 2P", system-ui, monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--green-soft);
+      background: rgba(5,0,22,0.85);
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(143,117,255,0.7);
+    }
+
+    .console-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .console-chips {
+      display: flex;
+      gap: 10px;
+      font-family: "Press Start 2P", system-ui, monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .chip {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(143,117,255,0.7);
+      background: rgba(9,0,40,0.9);
+    }
+
+    .chip.green {
+      border-color: rgba(51,255,153,0.9);
+      color: var(--green-soft);
+    }
+
+    /* CARDS GENERALES */
+
+    .card {
+      background: radial-gradient(circle at top, #1b0040, #050016 75%);
+      border-radius: 20px;
+      border: 1px solid rgba(143,117,255,0.6);
+      box-shadow:
+        0 0 16px rgba(18,8,56,0.9),
+        0 0 40px rgba(12,255,176,0.25);
+      padding: 24px 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px dashed rgba(143,117,255,0.35);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .card h3 {
+      font-family: "Press Start 2P", system-ui, monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 0.94rem;
+      color: var(--text-muted);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(169,139,255,0.7);
+      font-size: 0.7rem;
+      color: var(--accent-strong);
+      background: rgba(9,0,40,0.9);
+    }
+
+    .pill::before {
+      content: "★";
+      font-size: 0.7rem;
+      color: var(--green-soft);
+    }
+
+    .pill.green {
+      border-color: rgba(51,255,153,0.8);
+    }
+
+    /* Sección QUIÉNES SOMOS */
+
+    .about-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .about-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .about-text p {
+      color: var(--text-muted);
+      margin-top: 16px;
+      font-size: 0.96rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .about-card h4 {
+      font-family: "Press Start 2P", system-ui, monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .about-card ul {
+      list-style: none;
+      margin-top: 6px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .about-card li::before {
+      content: "✱";
+      margin-right: 6px;
+      color: var(--green-soft);
+      font-size: 0.8rem;
+    }
+
+    /* MISIONS */
+
+    .missions-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 26px;
+      margin-top: 26px;
+    }
+
+    .mission-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .mission-header h3 {
+      font-size: 0.9rem;
+    }
+
+    .mission-header .subpixel {
+      font-size: 0.62rem;
+    }
+
+    .mission-main {
+      margin-top: 10px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .mission-bullets {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px,1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .mission-bullets .mini-card {
+      border-radius: 14px;
+      padding: 12px 12px 13px;
+      background: radial-gradient(circle at top, #190038, #050016 70%);
+      border: 1px solid rgba(143,117,255,0.55);
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mini-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px dashed rgba(143,117,255,0.3);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .mini-card-title {
+      font-family: "Press Start 2P", system-ui, monospace;
+      font-size: 0.64rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent-soft);
+      margin-bottom: 6px;
+    }
+
+    .status-bar {
+      margin-top: 14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: radial-gradient(circle at top, rgba(51,255,153,0.4), rgba(0,0,0,0.9));
+      border: 1px solid rgba(51,255,153,0.9);
+      font-family: "Press Start 2P", system-ui, monospace;
+      font-size: 0.64rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-align: center;
+      color: var(--green-soft);
+      box-shadow: 0 0 20px rgba(51,255,153,0.6);
+    }
+
+    /* WHY US */
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .why-grid .mini-card {
+      font-size: 0.9rem;
+    }
+
+    .why-grid .mini-card-title {
+      margin-bottom: 8px;
+    }
+
+    .bar-green {
+      margin-top: 20px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      background: radial-gradient(circle at top, rgba(51,255,153,0.5), rgba(5,0,22,0.95));
+      border: 1px solid rgba(51,255,153,0.9);
+      color: var(--green-soft);
+      font-family: "Press Start 2P", system-ui, monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    /* CTA FINAL */
+
+    .cta-final {
+      text-align: center;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .cta-final p {
+      margin-top: 18px;
+      color: var(--text-muted);
+      font-size: 0.96rem;
+    }
+
+    .cta-quote {
+      margin-top: 20px;
+      padding: 18px 20px;
+      border-radius: 18px;
+      background: radial-gradient(circle at top, #1a0040, #040014 80%);
+      border: 1px solid rgba(143,117,255,0.8);
+      font-style: italic;
+      color: var(--accent-strong);
+      position: relative;
+    }
+
+    .cta-quote::before {
+      content: "❝";
+      position: absolute;
+      top: 10px;
+      left: 14px;
+      color: var(--green-soft);
+      opacity: 0.9;
+    }
+
+    .cta-quote::after {
+      content: "❞";
+      position: absolute;
+      bottom: 10px;
+      right: 14px;
+      color: var(--green-soft);
+      opacity: 0.9;
+    }
+
+    .cta-sub {
+      margin-top: 18px;
+      font-family: "Press Start 2P", system-ui, monospace;
+      font-size: 0.64rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .cta-buttons {
+      margin-top: 24px;
+    }
+
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+
+    <!-- HERO -->
+    <section class="hero" id="inicio">
+      <div class="hero-main">
+        <span class="tag">Level select: departamento social</span>
+        <h1 class="pixel-title">Social Quest: nueva era de impacto social</h1>
+        <p>
+          Campaña gamer para dirigir el Departamento Social de NI y conectar a los estudiantes con la comunidad
+          mediante propuestas creativas, humanas y con propósito.
+        </p>
+        <div class="hero-buttons">
+          <a href="#misiones" class="btn-primary">Press start with us</a>
+          <a href="#nosotros" class="btn-secondary">Conocer al equipo</a>
+        </div>
+      </div>
+
+      <div class="hero-console">
+        <div class="console-header">
+          <span>Social Quest</span>
+          <div class="lifebar">
+            <div class="lifebar-dot"></div>
+            <div class="lifebar-dot"></div>
+            <div class="lifebar-dot off"></div>
+          </div>
+        </div>
+
+        <div class="console-players">
+          <div class="avatar-panel">
+            <div class="avatar-sprite avatar-1"></div>
+            <div class="avatar-label">Player 1 · Coordinadora</div>
+          </div>
+          <div class="avatar-panel">
+            <div class="avatar-sprite avatar-2"></div>
+            <div class="avatar-label">Player 2 · Director</div>
+          </div>
+        </div>
+
+        <div class="console-footer">
+          <div class="console-chips">
+            <div class="chip">♥ impacto social</div>
+            <div class="chip green">★ modo cooperativo</div>
+          </div>
+          <span class="subpixel">Press start</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIÉNES SOMOS -->
+    <section id="nosotros">
+      <div class="about-layout">
+        <div class="about-text">
+          <span class="tag">Game Masters</span>
+          <h2 class="pixel-title" style="font-size:1.4rem;margin-top:18px;">
+            El equipo detrás del control
+          </h2>
+          <p>
+            Somos un equipo de NI que cree que el impacto social también se juega en modo cooperativo. Queremos que
+            el área social sea un puente real entre lo que pasa en el campus y lo que vive la comunidad del Caribe
+            colombiano.
+          </p>
+        </div>
+
+        <div>
+          <div class="about-grid">
+            <div class="card about-card">
+              <h4>Coordinadora del área social</h4>
+              <p class="text-muted">Player 1</p>
+              <ul style="margin-top:10px;">
+                <li>Escucha activa y cercanía con los grupos estudiantiles.</li>
+                <li>Experiencia organizando actividades y espacios participativos.</li>
+                <li>Energía para acompañar procesos durante todo el semestre.</li>
+              </ul>
+            </div>
+            <div class="card about-card">
+              <h4>Director del área social</h4>
+              <p class="text-muted">Player 2</p>
+              <ul style="margin-top:10px;">
+                <li>Visión estratégica y enfoque de largo plazo.</li>
+                <li>Capacidad para articular ideas, equipos y recursos.</li>
+                <li>Compromiso con un impacto social medible y constante.</li>
+              </ul>
+            </div>
+          </div>
+          <p style="margin-top:14px;font-size:0.9rem;color:var(--text-muted);">
+            Jugamos en modo cooperativo: cada propuesta tiene corazón, logística y seguimiento.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MISIONES -->
+    <section id="misiones">
+      <div style="text-align:center;margin-bottom:10px;">
+        <span class="tag">Quest log</span>
+      </div>
+      <h2 class="pixel-title" style="margin-top:16px;">Nuestras misiones para el semestre</h2>
+      <p class="text-muted" style="text-align:center;margin-top:14px;max-width:650px;margin-inline:auto;font-size:0.96rem;">
+        No venimos solo con promesas, sino con quests claras. Cada misión tiene un propósito, un lugar tentativo
+        y un impacto esperado en la comunidad.
+      </p>
+
+      <div class="missions-grid" style="margin-top:28px;">
+
+        <!-- PANGEA COLOREA -->
+        <article class="card">
+          <div class="mission-header">
+            <div>
+              <span class="subpixel">Quest 01 · Impacto visual</span>
+              <h3>Pangea Colorea: arte urbano para transformar espacios</h3>
+            </div>
+            <span class="pill green">Propuesta en exploración</span>
+          </div>
+          <p class="mission-main">
+            Intervención artística en un muro cercano al Zoológico de Barranquilla, donde estudiantes y comunidad
+            pintan juntos murales de calma, esperanza y pertenencia.
+          </p>
+          <div class="mission-bullets">
+            <div class="mini-card">
+              <div class="mini-card-title">Intervención artística comunitaria</div>
+              Se abre un taller creativo para habitantes del sector y estudiantes,
+              diseñando el mural colectivamente.
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-title">Participación estudiantil activa</div>
+              Equipos de diseño, logística y pintura para que más estudiantes se involucren en cada etapa.
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-title">Entorno más visible y esperanzador</div>
+              El muro pasa de ser ruido visual a símbolo de cambio social y orgullo para la comunidad.
+            </div>
+          </div>
+          <div class="status-bar">
+            Ubicación tentativa identificada · Muro cercano al Zoológico de Barranquilla
+          </div>
+        </article>
+
+        <!-- PANGEA VOCES -->
+        <article class="card">
+          <div class="mission-header">
+            <div>
+              <span class="subpixel">Quest 02 · Diálogo</span>
+              <h3>Pangea Voces: café‑debate para hablar de lo que importa</h3>
+            </div>
+            <span class="pill">Espacios tipo picnic</span>
+          </div>
+          <p class="mission-main">
+            Encuentros al aire libre en el campus donde jóvenes se sientan en el césped a conversar sobre temas
+            humanos, globales y sociales, con algo para compartir y un ambiente cercano.
+          </p>
+          <div class="mission-bullets">
+            <div class="mini-card">
+              <div class="mini-card-title">Espacio de conversación segura</div>
+              Normas de cuidado, respeto y escucha para que todas las voces se sientan bienvenidas.
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-title">Intercambio de perspectivas</div>
+              Preguntas guía y café‑debate para conectar historias personales con realidades globales.
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-title">Conciencia social dentro de la U</div>
+              Llevar la conversación social al centro del campus, no solo a las noticias.
+            </div>
+          </div>
+          <div class="status-bar">
+            Transformar opiniones aisladas en diálogo con impacto
+          </div>
+        </article>
+
+        <!-- PANGEA CREA PAZ -->
+        <article class="card">
+          <div class="mission-header">
+            <div>
+              <span class="subpixel">Quest 03 · Bienestar</span>
+              <h3>Pangea Crea Paz: cuadros que acompañan emociones</h3>
+            </div>
+            <span class="pill">Bienestar emocional</span>
+          </div>
+          <p class="mission-main">
+            Jornadas para pintar cuadros de calma y mensajes de esperanza entre estudiantes, y luego regalarlos a
+            personas que atraviesan momentos difíciles como gesto de acompañamiento emocional.
+          </p>
+          <div class="mission-bullets">
+            <div class="mini-card">
+              <div class="mini-card-title">Arte como gesto de cuidado</div>
+              Cada cuadro se piensa para alguien, con frases e imágenes que transmiten compañía.
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-title">Actividad colectiva con propósito</div>
+              Crear juntos, conversar y compartir mientras se pinta, construyendo comunidad dentro de NI.
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-title">Regalos que acompañan</div>
+              Entregar los cuadros en espacios donde una palabra amable hace diferencia.
+            </div>
+          </div>
+          <div class="status-bar">
+            Convertir pequeños actos creativos en bienestar compartido
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- WHY US -->
+    <section id="por-que">
+      <div style="text-align:center;margin-bottom:10px;">
+        <span class="tag">Why us?</span>
+      </div>
+      <h2 class="pixel-title" style="margin-top:16px;">¿Por qué este equipo para el área social?</h2>
+      <p class="text-muted" style="text-align:center;margin-top:14px;max-width:650px;margin-inline:auto;font-size:0.96rem;">
+        Porque queremos que el área social deje de ser una opción extra y se convierta en un nivel clave de la
+        experiencia universitaria.
+      </p>
+
+      <div class="why-grid">
+        <div class="mini-card">
+          <div class="mini-card-title">Visión clara</div>
+          No empezamos de cero: traemos quests definidas, tiempos estimados y lugares tentativos para activar
+          el semestre.
+        </div>
+        <div class="mini-card">
+          <div class="mini-card-title">Corazón + estructura</div>
+          Cuidamos tanto lo humano como la organización: acompañar procesos, comunicar avances y darles seguimiento.
+        </div>
+        <div class="mini-card">
+          <div class="mini-card-title">Lenguaje cercano</div>
+          Conectamos con estudiantes en un idioma que sí entienden: dinámicas gamer, espacios frescos,
+          menos discurso y más experiencia.
+        </div>
+        <div class="mini-card">
+          <div class="mini-card-title">Compromiso con la comunidad</div>
+          Buscamos que cada acción tenga una conexión real con el Caribe colombiano y sus comunidades.
+        </div>
+      </div>
+
+      <div class="bar-green">
+        Cuando el área social sube de nivel, la comunidad también.
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section id="final">
+      <div class="cta-final">
+        <span class="tag">Final level</span>
+        <h2 class="pixel-title" style="margin-top:18px;">
+          Gracias por creer en esta misión
+        </h2>
+        <p>
+          Soñamos con un Departamento Social más cercano, creativo y constante; un lugar donde las ideas
+          se conviertan en proyectos y los proyectos en impacto real para nuestra comunidad.
+          Queremos construirlo con ustedes.
+        </p>
+
+        <div class="cta-quote">
+          Cuando las ideas se unen, el cambio también empieza a jugar a nuestro favor.
+        </div>
+
+        <div class="cta-sub">
+          Candidata a Coordinadora y Candidato a Director del Área Social
+        </div>
+
+        <div class="cta-buttons">
+          <a href="#inicio" class="btn-primary">Press start with us</a>
+        </div>
+      </div>
+
+      <footer>
+        Social Quest · Departamento Social · NI
+      </footer>
+    </section>
+
+  </div>
+</body>
+</html>
