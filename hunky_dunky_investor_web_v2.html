@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HUNKY DUNKY — Investor Experience</title>
+  <style>
+    :root{
+      --bg:#f6efe6;
+      --bg2:#efe1cf;
+      --panel:#fff9f3;
+      --panel-2:#f8eee2;
+      --ink:#241813;
+      --muted:#6f5b51;
+      --line:rgba(77,47,31,.12);
+      --gold:#d6a45a;
+      --gold2:#efcb87;
+      --choco:#5b3524;
+      --choco2:#7d4b33;
+      --cream:#fff6ec;
+      --accent:#9c6b48;
+      --shadow:0 24px 70px rgba(91,53,36,.12);
+      --radius:30px;
+      --max:1280px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;background:
+      radial-gradient(circle at top right, rgba(239,203,135,.22), transparent 24%),
+      radial-gradient(circle at top left, rgba(91,53,36,.08), transparent 18%),
+      linear-gradient(180deg, #faf5ef 0%, var(--bg) 34%, #f3e7d9 100%);
+      overflow-x:hidden}
+    h1,h2,h3,h4{font-family:Georgia, 'Times New Roman', serif;margin:0;line-height:1}
+    p{margin:0;color:var(--muted);line-height:1.65}
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+    .noise:before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.05;background-image:radial-gradient(rgba(91,53,36,.25) .6px, transparent .6px);background-size:14px 14px;mix-blend-mode:multiply}
+    .nav{position:sticky;top:0;z-index:100;backdrop-filter:blur(16px);background:rgba(250,245,239,.78);border-bottom:1px solid var(--line)}
+    .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
+    .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink)}
+    .mark{width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 30%, var(--gold2), var(--gold) 58%, #b8763a 100%);border:3px solid #3d2418;position:relative;box-shadow:0 14px 28px rgba(91,53,36,.18)}
+    .mark:before,.mark:after{content:'';position:absolute;background:#3d2418;border-radius:50%}
+    .mark:before{width:7px;height:7px;left:13px;top:16px;box-shadow:18px 0 0 #3d2418}
+    .mark:after{width:22px;height:10px;left:12px;top:28px;border-bottom:4px solid #3d2418;border-radius:0 0 20px 20px;background:transparent}
+    .brand strong{display:block;letter-spacing:.14em;font-size:13px}
+    .brand span{display:block;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:3px}
+    .nav-links{display:flex;gap:24px;flex-wrap:wrap}
+    .nav-links a{text-decoration:none;color:var(--ink);font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    .hero{padding:76px 0 44px;position:relative}
+    .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:30px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;background:rgba(255,250,244,.85);border:1px solid var(--line);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--choco)}
+    .eyebrow:before{content:'';width:8px;height:8px;border-radius:50%;background:linear-gradient(180deg,var(--gold2),var(--gold))}
+    .hero h1{font-size:clamp(54px,7.5vw,104px);margin:18px 0 16px;letter-spacing:-.04em}
+    .grad{background:linear-gradient(135deg,var(--choco),#a26942 45%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .lead{font-size:19px;max-width:700px}
+    .cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+    .btn{text-decoration:none;padding:16px 22px;border-radius:999px;font-weight:900;letter-spacing:.02em;border:1px solid var(--line);display:inline-flex;align-items:center;gap:12px;transition:.25s ease;box-shadow:0 10px 30px rgba(91,53,36,.06)}
+    .btn:hover{transform:translateY(-2px)}
+    .btn.primary{background:linear-gradient(135deg,var(--choco),var(--choco2));color:#fff}
+    .btn.secondary{background:rgba(255,249,243,.9);color:var(--ink)}
+    .hero-side{position:relative}
+    .spot{position:absolute;border-radius:999px;filter:blur(30px);opacity:.5;pointer-events:none}
+    .spot.one{width:220px;height:220px;background:rgba(239,203,135,.55);right:-40px;top:-20px}
+    .spot.two{width:180px;height:180px;background:rgba(91,53,36,.12);left:-30px;bottom:20px}
+    .showcase{background:linear-gradient(180deg,#fff9f3,#f3e4d4);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:36px;padding:28px;position:relative;overflow:hidden}
+    .showcase:after{content:'';position:absolute;inset:auto -40px -50px auto;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle, rgba(239,203,135,.55), transparent 68%)}
+    .showcase-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+    .chip-tag{padding:9px 12px;border-radius:999px;background:#fff7ef;border:1px solid var(--line);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--choco)}
+    .pack{background:#5a3524;border-radius:30px;padding:18px;border:6px solid #392117;box-shadow:inset 0 2px 0 rgba(255,255,255,.14), 0 30px 60px rgba(91,53,36,.18)}
+    .lid{height:62px;background:linear-gradient(180deg,#83563d,#603726);border-radius:18px 18px 12px 12px;margin-bottom:14px;position:relative}
+    .lid:before{content:'HUNKY DUNKY';position:absolute;left:18px;top:20px;color:#fff0dd;font-size:13px;font-weight:900;letter-spacing:.18em}
+    .lid:after{content:'cookies x4';position:absolute;right:18px;top:20px;color:#e7cba5;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+    .cookie-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .cookie{aspect-ratio:1;border-radius:50%;position:relative;border:4px solid #4a2d20;box-shadow:inset 0 10px 16px rgba(255,255,255,.18), inset 0 -12px 20px rgba(0,0,0,.10)}
+    .almendra{background:radial-gradient(circle at 34% 28%, #f3d196, #cf9656 64%, #af6b34)}
+    .chocochip{background:radial-gradient(circle at 34% 28%, #e4b976, #c98949 64%, #a86430)}
+    .cookiescream{background:radial-gradient(circle at 34% 28%, #f6eadc, #d7c2ad 64%, #b28f73)}
+    .arequipe{background:radial-gradient(circle at 34% 28%, #ebb881, #cf874f 64%, #ae6532)}
+    .chip,.oreo{position:absolute;width:14px;height:14px;border-radius:50%}
+    .chip{background:#4a2d1f}
+    .oreo{background:#4b3328;box-shadow:0 0 0 4px #ebe0d4 inset}
+    .alm{position:absolute;width:18px;height:10px;background:#8b5a39;border-radius:999px;transform:rotate(32deg)}
+    .swirl{position:absolute;border:3px solid rgba(90,52,35,.46);border-top-color:transparent;border-left-color:transparent;border-radius:50%}
+    .mini-note{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+    .mini-note div{background:rgba(255,255,255,.52);border:1px solid var(--line);border-radius:18px;padding:14px}
+    .mini-note strong{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--choco);margin-bottom:6px}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px}
+    .stat{background:rgba(255,249,243,.88);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 14px 34px rgba(91,53,36,.06)}
+    .stat .k{font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+    .stat .v{font-size:34px;font-weight:900;color:var(--choco);margin-top:10px}
+    section{padding:54px 0}
+    .section-top{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:24px}
+    .section-top h2{font-size:48px;letter-spacing:-.03em}
+    .section-top p{max-width:490px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    .card{background:linear-gradient(180deg, rgba(255,249,243,.96), rgba(246,236,224,.96));border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
+    .card h3{font-size:30px;margin-bottom:12px}
+    .overline{font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+    .feature-icon{width:50px;height:50px;border-radius:18px;background:linear-gradient(180deg,#fff3e1,#ecd0a3);border:1px solid rgba(214,164,90,.25);display:grid;place-items:center;color:var(--choco);font-size:22px;margin-bottom:16px}
+    .story{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .panel-dark{background:linear-gradient(180deg,#5b3524,#3f2418);color:#fff;border-radius:36px;padding:34px;box-shadow:0 30px 70px rgba(63,36,24,.22)}
+    .panel-dark p{color:rgba(255,244,230,.78)}
+    .quote{font-size:34px;line-height:1.18;margin-bottom:18px}
+    .flavors{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    .flavor-card{text-align:center}
+    .disc{width:132px;height:132px;border-radius:50%;margin:0 auto 16px;border:4px solid #4b2d20;position:relative;box-shadow:inset 0 10px 18px rgba(255,255,255,.18), inset 0 -12px 20px rgba(0,0,0,.10)}
+    .pricing{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+    .price-main{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+    .price-box{background:#fff7ef;border:1px solid var(--line);border-radius:22px;padding:18px}
+    .price-box .n{font-size:12px;font-weight:900;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+    .price-box .p{font-size:30px;font-weight:900;color:var(--choco);margin-top:10px}
+    .finance{display:grid;grid-template-columns:1.12fr .88fr;gap:18px}
+    .chart-card{padding:28px}
+    .chart-title{font-size:13px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--choco);margin-bottom:14px}
+    .bars{display:flex;align-items:flex-end;gap:10px;height:310px;padding-top:16px}
+    .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:10px}
+    .stack{width:100%;max-width:54px;height:238px;border-radius:18px 18px 10px 10px;overflow:hidden;background:#eedfce;border:1px solid var(--line);display:flex;flex-direction:column;justify-content:flex-end}
+    .income{background:linear-gradient(180deg,var(--gold2),var(--gold))}
+    .expense{background:linear-gradient(180deg,#9f6e51,#6b4330)}
+    .month{font-size:10px;font-weight:900;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+    .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px;color:var(--muted);font-size:14px}
+    .legend span{display:inline-flex;align-items:center;gap:8px}
+    .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+    .insights{display:grid;grid-template-columns:1fr;gap:14px}
+    .insight{background:#fff8f2;border:1px solid var(--line);border-radius:22px;padding:18px}
+    .insight strong{display:block;color:var(--choco);margin-bottom:6px}
+    .macro{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+    .macro .big{font-size:30px;font-weight:900;color:var(--choco);margin:10px 0}
+    .projection{display:grid;grid-template-columns:1.06fr .94fr;gap:18px}
+    .proj-bars{display:flex;align-items:flex-end;gap:16px;height:260px;padding-top:16px}
+    .proj-col{flex:1;text-align:center}
+    .proj-bar{width:70%;margin:0 auto;border-radius:18px 18px 10px 10px;background:linear-gradient(180deg,#f0d29a,var(--gold));border:1px solid rgba(214,164,90,.3);box-shadow:0 12px 24px rgba(214,164,90,.18)}
+    .founders{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .founder{background:linear-gradient(180deg,#fff8f2,#f1e4d8);border:1px solid var(--line);border-radius:26px;padding:22px;box-shadow:var(--shadow)}
+    .founder .role{font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+    .founder h4{font-size:28px;margin:10px 0 12px}
+    .app{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .phone-wrap{display:grid;place-items:center}
+    .phone{width:300px;height:600px;border-radius:40px;background:#1f150f;padding:12px;box-shadow:0 30px 70px rgba(36,24,19,.28)}
+    .screen{width:100%;height:100%;border-radius:32px;background:linear-gradient(180deg,#fff9f3,#f3e8db);padding:18px;position:relative;overflow:hidden}
+    .screen h4{font-size:26px;margin-bottom:10px}
+    .app-card{background:#fffefc;border:1px solid var(--line);border-radius:22px;padding:14px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .tag{padding:7px 10px;border-radius:999px;background:#fef2df;color:var(--choco);font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
+    .merch{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    .mock{background:linear-gradient(180deg,#fff8f2,#f2e4d5);border:1px solid var(--line);border-radius:30px;padding:20px;min-height:220px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:14px;box-shadow:var(--shadow)}
+    .mock-shape{background:linear-gradient(180deg,#fff7ec,#ebcf9e);border:1px solid rgba(214,164,90,.24)}
+    .shirt{width:112px;height:100px;border-radius:26px 26px 18px 18px;position:relative}
+    .shirt:before,.shirt:after{content:'';position:absolute;top:8px;width:34px;height:28px;border-radius:12px;background:inherit;border:inherit}
+    .shirt:before{left:-20px}.shirt:after{right:-20px}
+    .pen{width:140px;height:18px;border-radius:999px}
+    .notebook{width:120px;height:150px;border-radius:20px}
+    .sticker{width:110px;height:110px;border-radius:50%}
+    .footer{padding:50px 0 80px}
+    .footer-box{background:linear-gradient(180deg,#4c2b1d,#2f1b13);color:#fff;border-radius:38px;padding:34px;box-shadow:0 34px 80px rgba(47,27,19,.28)}
+    .footer-box p{color:rgba(255,241,226,.8)}
+    .footer-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+    .footer-metrics .item{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);padding:18px;border-radius:22px}
+    @media (max-width:1100px){
+      .hero-grid,.story,.pricing,.finance,.projection,.app,.grid-3,.grid-4,.flavors,.macro,.founders,.merch,.stats,.price-main{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width:760px){
+      .hero-grid,.story,.pricing,.finance,.projection,.app,.grid-3,.grid-4,.flavors,.macro,.founders,.merch,.stats,.price-main{grid-template-columns:1fr}
+      .nav-inner{flex-direction:column;gap:14px}
+      .nav-links{justify-content:center}
+      .section-top{flex-direction:column;align-items:start}
+      .hero h1{font-size:52px}
+      .phone{width:100%;max-width:320px;height:580px}
+    }
+  </style>
+</head>
+<body class="noise">
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top">
+        <div class="mark"></div>
+        <div><strong>HUNKY DUNKY</strong><span>Investor Experience</span></div>
+      </a>
+      <div class="nav-links">
+        <a href="#concepto">Concepto</a>
+        <a href="#sabores">Sabores</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#finanzas">Finanzas</a>
+        <a href="#fundadores">Fundadores</a>
+        <a href="#app">App</a>
+      </div>
+    </div>
+  </nav>
+
+  <header id="top" class="hero wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">Marca premium de cookies & brownies</div>
+        <h1>Una marca diseñada para vender <span class="grad">antojo, regalo y valor.</span></h1>
+        <p class="lead">HUNKY DUNKY transforma cookies y brownies en una experiencia aspiracional: producto protagonista, empaque memorable, branding coherente y una narrativa financiera lista para convencer inversionistas.</p>
+        <div class="cta">
+          <a class="btn primary" href="#finanzas">Ver potencial financiero</a>
+          <a class="btn secondary" href="#sabores">Explorar el producto estrella</a>
+        </div>
+      </div>
+      <div class="hero-side">
+        <div class="spot one"></div><div class="spot two"></div>
+        <div class="showcase">
+          <div class="showcase-head">
+            <div>
+              <div class="overline">Packaging principal</div>
+              <h3 style="font-size:38px">Caja cookies x4</h3>
+            </div>
+            <div class="chip-tag">Lista para vitrina</div>
+          </div>
+          <div class="pack">
+            <div class="lid"></div>
+            <div class="cookie-grid">
+              <div class="cookie almendra"><span class="alm" style="left:18px;top:22px"></span><span class="alm" style="left:58px;top:38px"></span><span class="alm" style="left:34px;top:72px"></span></div>
+              <div class="cookie chocochip"><span class="chip" style="left:18px;top:20px"></span><span class="chip" style="left:62px;top:26px"></span><span class="chip" style="left:34px;top:62px"></span><span class="chip" style="left:74px;top:72px"></span></div>
+              <div class="cookie cookiescream"><span class="oreo" style="left:18px;top:24px"></span><span class="oreo" style="left:64px;top:34px"></span><span class="oreo" style="left:36px;top:72px"></span></div>
+              <div class="cookie arequipe"><span class="swirl" style="left:18px;top:24px;width:38px;height:38px"></span><span class="swirl" style="left:58px;top:54px;width:28px;height:28px"></span></div>
+            </div>
+          </div>
+          <div class="mini-note">
+            <div><strong>Producto estrella</strong><p>El equipo decidió presentar la caja de cookies x4 como la referencia principal de la marca.</p></div>
+            <div><strong>Identidad visual</strong><p>Tonos crema, chocolate y dorado para una sensación premium, cálida y memorable.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="k">Ingresos 2026</div><div class="v">$1.872B</div></div>
+      <div class="stat"><div class="k">Egresos 2026</div><div class="v">$1.302B</div></div>
+      <div class="stat"><div class="k">Excedentes</div><div class="v">$569.8M</div></div>
+      <div class="stat"><div class="k">Margen total</div><div class="v">30,44%</div></div>
+    </div>
+  </header>
+
+  <section id="concepto">
+    <div class="wrap">
+      <div class="section-top">
+        <div><h2>El concepto que venimos construyendo.</h2></div>
+        <p>La marca fue pensada para verse seria frente a inversionistas, pero emocional frente al cliente final: una mezcla entre experiencia premium, compra por antojo y regalo con intención.</p>
+      </div>
+      <div class="story">
+        <div class="panel-dark">
+          <div class="overline" style="color:#f0c97a">Brand statement</div>
+          <div class="quote">“No vendemos solo galletas y brownies; vendemos una experiencia visual, emocional y financieramente atractiva.”</div>
+          <p>HUNKY DUNKY nace como una marca con diseño consistente, identidad recordable y una presentación lo suficientemente sólida para ser defendida tanto en clase como ante potenciales aliados.</p>
+        </div>
+        <div class="grid-3" style="grid-template-columns:1fr;gap:16px">
+          <div class="card"><div class="feature-icon">✦</div><h3>Compra aspiracional</h3><p>El producto se proyecta como detalle premium, regalo visualmente impactante y compra con valor percibido superior.</p></div>
+          <div class="card"><div class="feature-icon">▣</div><h3>Empaque protagonista</h3><p>La caja no es un accesorio: es parte central de la propuesta, ayuda a justificar precio y eleva percepción de marca.</p></div>
+          <div class="card"><div class="feature-icon">◌</div><h3>Escalabilidad visual</h3><p>El mismo sistema gráfico funciona en box, app, merchandising, presentación y futura presencia digital.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sabores">
+    <div class="wrap">
+      <div class="section-top">
+        <div><h2>Los sabores que sostienen la experiencia.</h2></div>
+        <p>La caja integra cuatro perfiles complementarios: un sabor clásico, uno aspiracional, uno visualmente potente y uno emocionalmente cercano.</p>
+      </div>
+      <div class="flavors">
+        <div class="card flavor-card">
+          <div class="disc almendra"><span class="alm" style="left:20px;top:24px"></span><span class="alm" style="left:64px;top:38px"></span><span class="alm" style="left:36px;top:74px"></span></div>
+          <div class="overline">Signature premium</div>
+          <h3>Chocolate con almendra</h3>
+          <p>Perfil sofisticado, cálido y de alto valor percibido para elevar la imagen del portafolio.</p>
+        </div>
+        <div class="card flavor-card">
+          <div class="disc chocochip"><span class="chip" style="left:18px;top:22px"></span><span class="chip" style="left:68px;top:32px"></span><span class="chip" style="left:32px;top:66px"></span><span class="chip" style="left:78px;top:74px"></span></div>
+          <div class="overline">Mainstream favorite</div>
+          <h3>Chocochip</h3>
+          <p>La referencia clásica del portafolio, fundamental para rotación, reconocimiento y volumen.</p>
+        </div>
+        <div class="card flavor-card">
+          <div class="disc cookiescream"><span class="oreo" style="left:18px;top:24px"></span><span class="oreo" style="left:68px;top:36px"></span><span class="oreo" style="left:34px;top:74px"></span></div>
+          <div class="overline">Visual magnet</div>
+          <h3>Cookies and cream</h3>
+          <p>Una propuesta con alto atractivo visual para contenidos, fotos de producto y recordación de marca.</p>
+        </div>
+        <div class="card flavor-card">
+          <div class="disc arequipe"><span class="swirl" style="left:18px;top:24px;width:38px;height:38px"></span><span class="swirl" style="left:58px;top:58px;width:26px;height:26px"></span></div>
+          <div class="overline">Emotional flavor</div>
+          <h3>Arequipe</h3>
+          <p>Conecta con cercanía, gusto local y una lectura más afectiva del producto sin perder estética premium.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="wrap">
+      <div class="section-top">
+        <div><h2>Pricing y lectura competitiva.</h2></div>
+        <p>El presupuesto parte de precios definidos para cookies x4, chocochip cookie y brownie Oreo, apoyados por benchmarking de mercado y por una propuesta de presentación superior.</p>
+      </div>
+      <div class="pricing">
+        <div class="card">
+          <div class="overline">Precios base 2026</div>
+          <h3>Arquitectura de producto</h3>
+          <p>La propuesta combina producto estrella, unidad individual y brownie para construir ticket, variedad y posibilidad de recompra.</p>
+          <div class="price-main">
+            <div class="price-box"><div class="n">Cookies x4</div><div class="p">$39.561,67</div></div>
+            <div class="price-box"><div class="n">Chocochip cookie</div><div class="p">$10.731,20</div></div>
+            <div class="price-box"><div class="n">Brownie Oreo</div><div class="p">$24.612,72</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="overline">Benchmark de referencia</div>
+          <h3>Competencia observada</h3>
+          <p>En el archivo se comparan empresas como Lets Dough It, Holy Cookie, Cookie Jaar y Braun Cookies, usando referencias de precios y ventas mensuales para construir el marco del presupuesto.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="finanzas">
+    <div class="wrap">
+      <div class="section-top">
+        <div><h2>Un presupuesto que ya cuenta una historia.</h2></div>
+        <p>El resumen financiero proyecta ingresos totales por $1.872.056.950,67, egresos por $1.302.278.170,40, excedentes por $569.778.780,27 y un margen consolidado de 30,44% durante 2026.</p>
+      </div>
+      <div class="finance">
+        <div class="card chart-card">
+          <div class="chart-title">Ingresos y egresos mensuales</div>
+          <div class="bars">
+            <div class="col"><div class="stack"><div class="income" style="height:33.2%"></div><div class="expense" style="height:27.4%"></div></div><div class="month">ene</div></div>
+            <div class="col"><div class="stack"><div class="income" style="height:64.9%"></div><div class="expense" style="height:45.2%"></div></div><div class="month">feb</div></div>
+            <div class="col"><div class="stack"><div class="income" style="height:75.7%"></div><div class="expense" style="height:51.7%"></div></div><div class="month">mar</div></div>
+            <div class="col"><div class="stack"><div class="income" style="height:69.9%"></div><div class="expense" style="height:48.2%"></div></div><div class="month">abr</div></div>
+            <div class="col"><div class="stack"><div class="income" style="height:86.5%"></div><div class="expense" style="height:58.2%"></div></div><div class="month">may</div></div>
+            <div class="col"><div class="stack"><div class="income" style="height:55.8%"></div><div class="expense" style="height:39.7%"></div></div><div class="month">jun</div></div>
+            <div class="col"><div class="stack"><div class="income" style="height:49.4%"></div><div class="expense" style="height:35.9%"></div></div><div class="month">jul</div></div>
+            <div class="col"><div class="stack"><div class="income" style="height:69.9%"></div><div class="expense" style="height:48.2%"></div></div><div class="month">ago</div></div>
+            <div class="col"><div class="stack"><div class="income" style="height:74.9%"></div><div class="expense" style="height:51.2%"></div></div><div class="month">sep</div></div>
+            <div class="col"><div class="stack"><div class="income" style="height:80.7%"></div><div class="expense" style="height:54.7%"></div></div><div class="month">oct</div></div>
+            <div class="col"><div class="stack"><div class="income" style="height:37.4%"></div><div class="expense" style="height:28.7%"></div></div><div class="month">nov</div></div>
+            <div class="col"><div class="stack"><div class="income" style="height:100%"></div><div class="expense" style="height:66.3%"></div></div><div class="month">dic</div></div>
+          </div>
+          <div class="legend">
+            <span><i class="dot income"></i>Ingresos</span>
+            <span><i class="dot expense"></i>Egresos</span>
+          </div>
+        </div>
+        <div class="insights">
+          <div class="card">
+            <div class="chart-title">Lectura ejecutiva</div>
+            <p>Diciembre aparece como el pico más alto del año, mientras mayo y octubre consolidan una secuencia de meses fuertes. Incluso en noviembre, el negocio conserva resultado positivo.</p>
+          </div>
+          <div class="insight"><strong>Ingresos totales</strong><p>$1.872.056.950,67 proyectados para 2026.</p></div>
+          <div class="insight"><strong>Egresos totales</strong><p>$1.302.278.170,40 con estructura operativa ya contemplada.</p></div>
+          <div class="insight"><strong>Excedentes</strong><p>$569.778.780,27 como resultado acumulado del periodo.</p></div>
+          <div class="insight"><strong>Margen total</strong><p>30,44%, coherente con una propuesta rentable y con potencial de crecimiento.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-top">
+        <div><h2>Indicadores macroeconómicos y proyección.</h2></div>
+        <p>Los parámetros base del archivo incluyen IPC de 7,7%, SMMLV de 23,8%, IPP de 9%, dólar de referencia en 3.800 y un margen objetivo de 40%.</p>
+      </div>
+      <div class="macro" style="margin-bottom:18px">
+        <div class="card"><div class="overline">IPC</div><div class="big">7,7%</div><p>Impacta ajustes de precios y costos.</p></div>
+        <div class="card"><div class="overline">SMMLV</div><div class="big">23,8%</div><p>Presiona la estructura salarial.</p></div>
+        <div class="card"><div class="overline">IPP</div><div class="big">9%</div><p>Incide en insumos y empaques.</p></div>
+        <div class="card"><div class="overline">Dólar</div><div class="big">$3.800</div><p>Referencia para variaciones sensibles.</p></div>
+        <div class="card"><div class="overline">Margen meta</div><div class="big">40%</div><p>Objetivo estratégico de sostenibilidad.</p></div>
+      </div>
+      <div class="projection">
+        <div class="card">
+          <div class="chart-title">Lectura visual de crecimiento 2026–2030</div>
+          <div class="proj-bars">
+            <div class="proj-col"><div class="proj-bar" style="height:110px"></div><p>2026 base</p></div>
+            <div class="proj-col"><div class="proj-bar" style="height:138px"></div><p>2027</p></div>
+            <div class="proj-col"><div class="proj-bar" style="height:164px"></div><p>2028</p></div>
+            <div class="proj-col"><div class="proj-bar" style="height:194px"></div><p>2029</p></div>
+            <div class="proj-col"><div class="proj-bar" style="height:226px"></div><p>2030</p></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="chart-title">Motores de proyección</div>
+          <div class="grid-3" style="grid-template-columns:1fr;gap:12px">
+            <div class="insight"><strong>Ajuste por IPC</strong><p>Permite estimar evolución de precios y gastos.</p></div>
+            <div class="insight"><strong>Actualización salarial</strong><p>El SMMLV se refleja en la presión sobre mano de obra.</p></div>
+            <div class="insight"><strong>Presión de insumos</strong><p>El IPP sostiene la lógica de crecimiento de costos productivos.</p></div>
+            <div class="insight"><strong>Disciplina de margen</strong><p>La meta del 40% orienta decisiones futuras de precio y estructura.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="fundadores">
+    <div class="wrap">
+      <div class="section-top">
+        <div><h2>Los fundadores detrás de la marca.</h2></div>
+        <p>La compañía se presenta como una iniciativa fundada por un equipo multidisciplinario, con roles definidos en marca, operación, finanzas, crecimiento y lectura de mercado.</p>
+      </div>
+      <div class="founders">
+        <div class="founder"><div class="role">CEO & Brand Strategy</div><h4>Julián Sanchez</h4><p>Dirige la visión de marca, la narrativa de valor y la construcción estética del concepto HUNKY DUNKY.</p></div>
+        <div class="founder"><div class="role">COO & Finance Lead</div><h4>Sebastian Colinas</h4><p>Lidera el presupuesto, la lógica operativa y la traducción del modelo en resultados financieros proyectados.</p></div>
+        <div class="founder"><div class="role">CFO & Control</div><h4>Maria Alejandra Molina</h4><p>Fortalece el soporte contable y la lectura numérica que sostiene la viabilidad del proyecto.</p></div>
+        <div class="founder"><div class="role">CMO & Customer Experience</div><h4>Karem Acevedo</h4><p>Conecta la marca con emoción, presentación comercial y experiencia percibida por el cliente.</p></div>
+        <div class="founder"><div class="role">Growth & Partnerships</div><h4>Isaias Perez</h4><p>Impulsa mirada estratégica, oportunidades de crecimiento y posibles vínculos comerciales.</p></div>
+        <div class="founder"><div class="role">Market Intelligence</div><h4>Marcelo Romero</h4><p>Refuerza benchmarking, lectura competitiva y posicionamiento del negocio dentro del nicho.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="app">
+    <div class="wrap">
+      <div class="section-top">
+        <div><h2>La marca también vive en digital.</h2></div>
+        <p>La identidad construida funciona en app, compra móvil y piezas promocionales, reforzando una experiencia consistente desde el empaque hasta el pedido.</p>
+      </div>
+      <div class="app">
+        <div class="phone-wrap card">
+          <div class="phone">
+            <div class="screen">
+              <div class="tag">App preview</div>
+              <h4>Elige tu box ideal</h4>
+              <div class="app-card"><div><strong>Chocolate con almendra</strong><p style="font-size:13px">Perfil premium y cálido</p></div><strong>$9.9</strong></div>
+              <div class="app-card"><div><strong>Chocochip</strong><p style="font-size:13px">El clásico que siempre entra</p></div><strong>$8.9</strong></div>
+              <div class="app-card"><div><strong>Cookies and cream</strong><p style="font-size:13px">Visualmente irresistible</p></div><strong>$9.4</strong></div>
+              <div class="app-card"><div><strong>Arequipe</strong><p style="font-size:13px">Más cercano y emocional</p></div><strong>$9.1</strong></div>
+              <div style="position:absolute;left:18px;right:18px;bottom:18px;background:linear-gradient(135deg,var(--choco),var(--choco2));color:#fff;border-radius:22px;padding:18px;font-weight:900;text-align:center">Pedir box de 4 galletas</div>
+            </div>
+          </div>
+        </div>
+        <div class="grid-3" style="grid-template-columns:1fr;gap:16px">
+          <div class="card"><div class="overline">Experiencia móvil</div><h3>Compra intuitiva</h3><p>La propuesta digital mantiene claridad visual, facilidad de selección y coherencia con el universo premium de la marca.</p></div>
+          <div class="card"><div class="overline">Conversión</div><h3>Marca que empuja pedido</h3><p>Una identidad sólida aumenta deseo, confianza y percepción de valor antes incluso de la primera mordida.</p></div>
+          <div class="card"><div class="overline">Escalabilidad</div><h3>Lista para crecer</h3><p>El sistema gráfico funciona para e-commerce, delivery, campañas, contenido y futuras extensiones comerciales.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-top">
+        <div><h2>Branding extendido.</h2></div>
+        <p>La identidad se adapta con facilidad a merchandising y elementos de apoyo, reforzando presencia, memorabilidad y presentación integral de la marca.</p>
+      </div>
+      <div class="merch">
+        <div class="mock"><div class="shirt mock-shape"></div><strong>Camisetas</strong><p style="text-align:center">Uniformes y piezas promocionales con marca consistente.</p></div>
+        <div class="mock"><div class="pen mock-shape"></div><strong>Lapiceros</strong><p style="text-align:center">Detalles de presentación y material de apoyo.</p></div>
+        <div class="mock"><div class="notebook mock-shape"></div><strong>Cuadernos</strong><p style="text-align:center">Uso institucional, eventos y kits promocionales.</p></div>
+        <div class="mock"><div class="sticker mock-shape"></div><strong>Stickers</strong><p style="text-align:center">Aplicación rápida en cajas, bolsas y piezas de empaque.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer wrap">
+    <div class="footer-box">
+      <div class="overline" style="color:#f0c97a">Investor close</div>
+      <h2 style="font-size:54px;margin-bottom:14px">Una marca emocional en percepción, y sólida en ejecución.</h2>
+      <p>HUNKY DUNKY combina un producto estrella claro, una identidad de marca coherente y un presupuesto 2026 que ya muestra rentabilidad, estructura y posibilidad de escalar.</p>
+      <div class="footer-metrics">
+        <div class="item"><strong>Producto principal</strong><p>Cookies x4 como empaque insignia de presentación.</p></div>
+        <div class="item"><strong>Resultado 2026</strong><p>Excedentes proyectados por $569.778.780,27.</p></div>
+        <div class="item"><strong>Visión</strong><p>Escalar desde una marca visualmente fuerte hacia una experiencia comercial completa.</p></div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
