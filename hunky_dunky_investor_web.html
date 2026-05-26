@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HUNKY DUNKY — Investor Web</title>
+  <style>
+    :root{
+      --bg:#f7f0e6;
+      --bg-2:#efe2d0;
+      --card:#fffaf4;
+      --ink:#2a1c16;
+      --muted:#6d5a4f;
+      --gold:#d7a554;
+      --gold-2:#f0c97a;
+      --choco:#5a3423;
+      --choco-2:#7a4b33;
+      --cream:#fff4e8;
+      --line:rgba(90,52,35,.12);
+      --shadow:0 18px 50px rgba(90,52,35,.12);
+      --radius:26px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:linear-gradient(180deg,var(--bg),#f9f4ee 45%,#f3e7d9);color:var(--ink)}
+    h1,h2,h3{font-family:Georgia,'Times New Roman',serif;line-height:1.02;margin:0}
+    p{margin:0;color:var(--muted);line-height:1.6}
+    .wrap{max-width:1220px;margin:0 auto;padding:0 24px}
+    .nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);background:rgba(247,240,230,.8);border-bottom:1px solid var(--line)}
+    .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
+    .brand{display:flex;gap:14px;align-items:center;font-weight:800;letter-spacing:.08em}
+    .logo{width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--gold-2),var(--gold) 55%,#b97833 100%);border:3px solid #3e251a;position:relative;box-shadow:0 10px 24px rgba(122,75,51,.22)}
+    .logo:before,.logo:after{content:'';position:absolute;background:#3e251a;border-radius:50%}
+    .logo:before{width:7px;height:7px;left:12px;top:15px;box-shadow:16px 0 0 #3e251a,8px 11px 0 2px transparent}
+    .logo:after{width:20px;height:10px;left:12px;top:26px;border-bottom:4px solid #3e251a;border-radius:0 0 20px 20px;background:transparent}
+    .nav a{color:var(--ink);text-decoration:none;margin-left:20px;font-size:14px;font-weight:700}
+    .hero{padding:76px 0 42px}
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center}
+    .eyebrow{display:inline-block;padding:10px 14px;border-radius:999px;background:#fff7ef;border:1px solid var(--line);color:var(--choco);font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+    .title{font-size:clamp(44px,7vw,92px);margin:16px 0 14px}
+    .title span{background:linear-gradient(135deg,var(--choco),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero p{font-size:18px;max-width:690px}
+    .cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+    .btn{padding:15px 20px;border-radius:999px;text-decoration:none;font-weight:800;border:1px solid var(--line);display:inline-flex;align-items:center;gap:10px}
+    .btn.primary{background:linear-gradient(135deg,var(--choco),var(--choco-2));color:#fff;box-shadow:var(--shadow)}
+    .btn.secondary{background:#fffaf5;color:var(--ink)}
+    .hero-card{background:linear-gradient(180deg,#fff8f1,#f4e8da);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:34px;padding:24px;position:relative;overflow:hidden}
+    .hero-card:before{content:'';position:absolute;inset:auto -60px -70px auto;width:220px;height:220px;background:radial-gradient(circle,var(--gold-2),transparent 65%);opacity:.35}
+    .product-box{background:#5c3727;border-radius:28px;padding:18px;border:6px solid #3d2418;box-shadow:inset 0 2px 0 rgba(255,255,255,.18)}
+    .product-lid{height:54px;background:linear-gradient(180deg,#815338,#633926);border-radius:16px 16px 12px 12px;margin-bottom:12px;position:relative}
+    .product-lid:after{content:'HUNKY DUNKY';position:absolute;left:18px;top:15px;color:#fff1dd;font-weight:900;letter-spacing:.12em;font-size:13px}
+    .cookies{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .cookie{aspect-ratio:1;border-radius:50%;position:relative;border:4px solid #4d2d1f;box-shadow:inset 0 8px 16px rgba(255,255,255,.2), inset 0 -10px 18px rgba(0,0,0,.12)}
+    .almendra{background:radial-gradient(circle at 35% 30%,#efca8c,#cf9655 65%,#ab6a33)}
+    .chocochip{background:radial-gradient(circle at 35% 30%,#e0b169,#c98a48 65%,#a6632d)}
+    .cookiescream{background:radial-gradient(circle at 35% 30%,#f3e7d7,#d8c3ae 65%,#b6977b)}
+    .arequipe{background:radial-gradient(circle at 35% 30%,#e9b983,#cb864f 65%,#ad6531)}
+    .chip,.swirl,.almond,.oreo{position:absolute;border-radius:50%}
+    .chip{background:#4b2b1b;width:14px;height:14px}
+    .almond .a{position:absolute;width:18px;height:10px;background:#8c5b3b;border-radius:999px;transform:rotate(35deg)}
+    .swirl{border:3px solid rgba(99,57,38,.45);border-top-color:transparent;border-left-color:transparent;width:34px;height:34px}
+    .oreo{background:#4e352a;width:14px;height:14px;box-shadow:0 0 0 4px #ece2d7 inset}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:36px 0 10px}
+    .stat{background:rgba(255,250,244,.92);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 10px 30px rgba(90,52,35,.07)}
+    .stat .k{font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);font-weight:800}
+    .stat .v{font-size:32px;font-weight:900;color:var(--choco);margin-top:10px}
+    section{padding:44px 0}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:24px}
+    .section-head h2{font-size:42px}
+    .cards-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+    .flavors{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    .flavor-disc{width:120px;height:120px;margin:0 auto 14px;border-radius:50%;border:4px solid #4c2e20;position:relative}
+    .tiny{font-size:14px}
+    .muted{color:var(--muted)}
+    .two{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}
+    .finance-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+    .chart-wrap{padding:26px}
+    .chart-title{font-weight:900;margin-bottom:14px;color:var(--choco)}
+    .bars{display:flex;align-items:flex-end;gap:10px;height:280px;padding-top:16px}
+    .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:10px}
+    .bar-stack{width:100%;max-width:54px;display:flex;flex-direction:column;justify-content:flex-end;height:220px;border-radius:16px 16px 10px 10px;overflow:hidden;background:#f1e4d5;border:1px solid var(--line)}
+    .income{background:linear-gradient(180deg,var(--gold-2),var(--gold))}
+    .expense{background:linear-gradient(180deg,#9c6c50,#6b4331)}
+    .month{font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.08em}
+    .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px}
+    .dot{width:12px;height:12px;border-radius:50%;display:inline-block;margin-right:8px}
+    .line-card{display:flex;flex-direction:column;justify-content:space-between}
+    .line-chart{height:220px;width:100%}
+    .founders{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .founder{background:linear-gradient(180deg,#fff8f2,#f5eadf);border:1px solid var(--line);border-radius:22px;padding:20px}
+    .role{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);font-weight:900}
+    .name{font-size:24px;margin:8px 0 10px}
+    .macro{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+    .macro .card{padding:20px}
+    .macro .big{font-size:28px;font-weight:900;color:var(--choco);margin:10px 0}
+    .footer{padding:40px 0 60px;color:var(--muted);font-size:14px}
+    @media (max-width: 1024px){
+      .hero-grid,.two,.finance-grid,.cards-3,.flavors,.founders,.macro,.stats{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width: 720px){
+      .hero-grid,.two,.finance-grid,.cards-3,.flavors,.founders,.macro,.stats{grid-template-columns:1fr}
+      .nav-inner{flex-direction:column;gap:10px}
+      .nav a{margin:0 10px}
+      .title{font-size:46px}
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <div class="brand"><div class="logo"></div><div>HUNKY DUNKY</div></div>
+      <div>
+        <a href="#producto">Producto</a>
+        <a href="#sabores">Sabores</a>
+        <a href="#finanzas">Finanzas</a>
+        <a href="#fundadores">Fundadores</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">Investor Brand Experience</div>
+        <h1 class="title">Cookies & brownies con una marca <span>irresistible</span>.</h1>
+        <p>HUNKY DUNKY presenta una propuesta premium centrada en experiencia, producto estrella y una narrativa visual lista para enamorar clientes e inversionistas.</p>
+        <div class="cta">
+          <a class="btn primary" href="#finanzas">Ver potencial financiero</a>
+          <a class="btn secondary" href="#sabores">Explorar producto estrella</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="product-box">
+          <div class="product-lid"></div>
+          <div class="cookies">
+            <div class="cookie almendra">
+              <div class="almond" style="left:18px;top:18px"><div class="a"></div></div>
+              <div class="almond" style="left:55px;top:30px"><div class="a"></div></div>
+              <div class="almond" style="left:34px;top:66px"><div class="a"></div></div>
+            </div>
+            <div class="cookie chocochip">
+              <div class="chip" style="left:20px;top:20px"></div><div class="chip" style="left:58px;top:30px"></div><div class="chip" style="left:34px;top:62px"></div><div class="chip" style="left:72px;top:70px"></div>
+            </div>
+            <div class="cookie cookiescream">
+              <div class="oreo" style="left:20px;top:24px"></div><div class="oreo" style="left:64px;top:38px"></div><div class="oreo" style="left:38px;top:70px"></div>
+            </div>
+            <div class="cookie arequipe">
+              <div class="swirl" style="left:22px;top:22px"></div><div class="swirl" style="left:54px;top:50px;width:28px;height:28px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="k">Producto estrella</div><div class="v">Cookies x4</div></div>
+      <div class="stat"><div class="k">Ingresos 2026</div><div class="v">$1.872B</div></div>
+      <div class="stat"><div class="k">Excedentes 2026</div><div class="v">$569.8M</div></div>
+      <div class="stat"><div class="k">Margen total</div><div class="v">30,44%</div></div>
+    </div>
+  </header>
+
+  <section id="producto">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Una marca pensada para antojo, regalo y estatus.</h2>
+        </div>
+        <p style="max-width:420px">El grupo definió la caja de cookies x4 como el producto principal a presentar, integrada por cuatro sabores distintos en una propuesta visual premium y lista para vitrina o regalo.</p>
+      </div>
+      <div class="cards-3">
+        <div class="card"><h3>Presentación hero</h3><p class="tiny">Caja horizontal de apertura superior, con experiencia visual limpia, premium y lista para exhibir las cuatro unidades desde el primer vistazo.</p></div>
+        <div class="card"><h3>Compra emocional</h3><p class="tiny">La narrativa de marca combina deseo, detalle y sabor: una propuesta para regalar, compartir y convertir una compra cotidiana en algo memorable.</p></div>
+        <div class="card"><h3>Escalable</h3><p class="tiny">El concepto se adapta a empaque, app, merchandising y presentación a inversionistas sin romper la identidad central de HUNKY DUNKY.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sabores">
+    <div class="wrap">
+      <div class="section-head">
+        <div><h2>Los cuatro sabores reales.</h2></div>
+        <p style="max-width:420px">La marca aterriza su experiencia en cuatro perfiles claros: chocolate con almendra, chocochip, cookies and cream y arequipe.</p>
+      </div>
+      <div class="flavors">
+        <div class="card" style="text-align:center"><div class="flavor-disc almendra"><div class="almond" style="left:18px;top:24px"><div class="a"></div></div><div class="almond" style="left:56px;top:40px"><div class="a"></div></div><div class="almond" style="left:30px;top:68px"><div class="a"></div></div></div><h3>Chocolate con almendra</h3><p class="tiny">Perfil cálido, intenso y elegante para un consumidor que busca sabor premium.</p></div>
+        <div class="card" style="text-align:center"><div class="flavor-disc chocochip"><div class="chip" style="left:20px;top:22px"></div><div class="chip" style="left:66px;top:30px"></div><div class="chip" style="left:34px;top:64px"></div><div class="chip" style="left:74px;top:72px"></div></div><h3>Chocochip</h3><p class="tiny">El sabor clásico que sostiene el volumen y conecta con el gusto más universal.</p></div>
+        <div class="card" style="text-align:center"><div class="flavor-disc cookiescream"><div class="oreo" style="left:18px;top:24px"></div><div class="oreo" style="left:66px;top:36px"></div><div class="oreo" style="left:34px;top:70px"></div></div><h3>Cookies and cream</h3><p class="tiny">Una propuesta visualmente poderosa, fresca y perfecta para contenido de marca.</p></div>
+        <div class="card" style="text-align:center"><div class="flavor-disc arequipe"><div class="swirl" style="left:18px;top:24px"></div><div class="swirl" style="left:58px;top:56px;width:26px;height:26px"></div></div><h3>Arequipe</h3><p class="tiny">Sabor local y emocional, diseñado para conectar con indulgencia y cercanía.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="finanzas">
+    <div class="wrap">
+      <div class="section-head">
+        <div><h2>Finanzas con narrativa clara.</h2></div>
+        <p style="max-width:430px">El presupuesto 2026 proyecta ingresos totales por $1.872.056.950,67, egresos por $1.302.278.170,40, excedentes por $569.778.780,27 y un margen total de 30,44%.</p>
+      </div>
+      <div class="finance-grid">
+        <div class="card chart-wrap">
+          <div class="chart-title">Ingresos vs egresos 2026</div>
+          <div class="bars">
+            <div class="col"><div class="bar-stack"><div class="income" style="height:33.2%"></div><div class="expense" style="height:27.4%"></div></div><div class="month">ENE</div></div>
+            <div class="col"><div class="bar-stack"><div class="income" style="height:64.9%"></div><div class="expense" style="height:45.2%"></div></div><div class="month">FEB</div></div>
+            <div class="col"><div class="bar-stack"><div class="income" style="height:75.7%"></div><div class="expense" style="height:51.7%"></div></div><div class="month">MAR</div></div>
+            <div class="col"><div class="bar-stack"><div class="income" style="height:69.9%"></div><div class="expense" style="height:48.2%"></div></div><div class="month">ABR</div></div>
+            <div class="col"><div class="bar-stack"><div class="income" style="height:86.5%"></div><div class="expense" style="height:58.2%"></div></div><div class="month">MAY</div></div>
+            <div class="col"><div class="bar-stack"><div class="income" style="height:55.8%"></div><div class="expense" style="height:39.7%"></div></div><div class="month">JUN</div></div>
+            <div class="col"><div class="bar-stack"><div class="income" style="height:49.4%"></div><div class="expense" style="height:35.9%"></div></div><div class="month">JUL</div></div>
+            <div class="col"><div class="bar-stack"><div class="income" style="height:69.9%"></div><div class="expense" style="height:48.2%"></div></div><div class="month">AGO</div></div>
+            <div class="col"><div class="bar-stack"><div class="income" style="height:74.9%"></div><div class="expense" style="height:51.2%"></div></div><div class="month">SEP</div></div>
+            <div class="col"><div class="bar-stack"><div class="income" style="height:80.7%"></div><div class="expense" style="height:54.7%"></div></div><div class="month">OCT</div></div>
+            <div class="col"><div class="bar-stack"><div class="income" style="height:37.4%"></div><div class="expense" style="height:28.7%"></div></div><div class="month">NOV</div></div>
+            <div class="col"><div class="bar-stack"><div class="income" style="height:100%"></div><div class="expense" style="height:66.3%"></div></div><div class="month">DIC</div></div>
+          </div>
+          <div class="legend">
+            <div><span class="dot income"></span>Ingresos</div>
+            <div><span class="dot expense"></span>Egresos</div>
+          </div>
+        </div>
+        <div class="card line-card">
+          <div>
+            <div class="chart-title">Lectura ejecutiva</div>
+            <p class="tiny">Diciembre fue el mes más fuerte en ingresos y excedentes, mientras que mayo y octubre también mostraron comportamiento sólido. El negocio mantiene rentabilidad positiva durante todo 2026.</p>
+          </div>
+          <svg class="line-chart" viewBox="0 0 360 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Margen mensual">
+            <path d="M20 170 C45 110, 70 85, 95 78 S145 88, 170 70 S220 120, 245 84 S295 90, 320 55" stroke="#d7a554" stroke-width="6" stroke-linecap="round"/>
+            <path d="M20 170 C45 110, 70 85, 95 78 S145 88, 170 70 S220 120, 245 84 S295 90, 320 55" stroke="rgba(90,52,35,.12)" stroke-width="18" stroke-linecap="round"/>
+            <g fill="#5a3423">
+              <circle cx="20" cy="170" r="5"/><circle cx="58" cy="112" r="5"/><circle cx="95" cy="78" r="5"/><circle cx="132" cy="86" r="5"/><circle cx="170" cy="70" r="5"/><circle cx="207" cy="102" r="5"/><circle cx="245" cy="95" r="5"/><circle cx="282" cy="84" r="5"/><circle cx="320" cy="55" r="5"/>
+            </g>
+            <text x="16" y="198" font-size="11" fill="#6d5a4f">Ene</text>
+            <text x="90" y="198" font-size="11" fill="#6d5a4f">Mar</text>
+            <text x="165" y="198" font-size="11" fill="#6d5a4f">May</text>
+            <text x="240" y="198" font-size="11" fill="#6d5a4f">Sep</text>
+            <text x="308" y="198" font-size="11" fill="#6d5a4f">Dic</text>
+          </svg>
+          <div class="stat" style="padding:18px;margin-top:10px"><div class="k">Margen total proyectado</div><div class="v">30,44%</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div><h2>Indicadores macroeconómicos base.</h2></div>
+        <p style="max-width:430px">Los parámetros usados para sustentar la proyección incluyen IPC 7,7%, SMMLV 23,8%, IPP 9%, dólar de referencia en 3.800 y margen objetivo de 40%.</p>
+      </div>
+      <div class="macro">
+        <div class="card"><div class="role">IPC</div><div class="big">7,7%</div><p class="tiny">Ajuste general de precios y costos.</p></div>
+        <div class="card"><div class="role">SMMLV</div><div class="big">23,8%</div><p class="tiny">Impacto en estructura salarial y operación.</p></div>
+        <div class="card"><div class="role">IPP</div><div class="big">9,0%</div><p class="tiny">Presión sobre insumos, empaques y producción.</p></div>
+        <div class="card"><div class="role">Dólar</div><div class="big">$3.800</div><p class="tiny">Referencia para variaciones en costos sensibles.</p></div>
+        <div class="card"><div class="role">Margen meta</div><div class="big">40%</div><p class="tiny">Meta estratégica de rentabilidad futura.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="fundadores">
+    <div class="wrap">
+      <div class="section-head">
+        <div><h2>Fundadores.</h2></div>
+        <p style="max-width:430px">La compañía se presenta como una iniciativa fundada por un equipo multidisciplinario de Negocios Internacionales y Contaduría.</p>
+      </div>
+      <div class="founders">
+        <div class="founder"><div class="role">CEO & Brand Strategy</div><div class="name">Julián Sanchez</div><p class="tiny">Visión de marca, narrativa comercial y dirección creativa del concepto.</p></div>
+        <div class="founder"><div class="role">COO & Finance Lead</div><div class="name">Sebastian Colinas</div><p class="tiny">Estructura operativa, presupuesto y disciplina financiera del negocio.</p></div>
+        <div class="founder"><div class="role">CFO & Control</div><div class="name">Maria Alejandra Molina</div><p class="tiny">Soporte contable, validación numérica y lectura de sostenibilidad financiera.</p></div>
+        <div class="founder"><div class="role">CMO & Experience</div><div class="name">Karem Acevedo</div><p class="tiny">Conexión emocional con cliente, storytelling y posicionamiento de marca.</p></div>
+        <div class="founder"><div class="role">Growth & Partnerships</div><div class="name">Isaias Perez</div><p class="tiny">Oportunidades de expansión, vinculación comercial y mirada estratégica.</p></div>
+        <div class="founder"><div class="role">Market Intelligence</div><div class="name">Marcelo Romero</div><p class="tiny">Lectura competitiva, benchmarking y proyección de mercado objetivo.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer wrap">
+    HUNKY DUNKY reúne una propuesta premium de cookies y brownies, un producto estrella definido como caja de cookies x4 y un presupuesto 2026 con ingresos proyectados de $1.872.056.950,67, excedentes de $569.778.780,27 y margen de 30,44%.
+  </footer>
+</body>
+</html>
