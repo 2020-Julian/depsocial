@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HUNKY DUNKY — Investor Web 2030</title>
+<style>
+:root{
+  --bg:#0e0d13; --bg2:#17141f; --panel:rgba(255,255,255,.05); --panel2:rgba(255,255,255,.07);
+  --line:rgba(255,255,255,.10); --text:#f7efe6; --muted:#c9bfb3; --gold:#d9aa5e; --gold2:#f5d398;
+  --cream:#fff7ef; --choco:#6f4630; --rose:#ff9f8d; --mint:#8fe7d4; --blue:#8db9ff; --shadow:0 30px 80px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;color:var(--text);background:
+radial-gradient(circle at 10% 10%, rgba(245,211,152,.12), transparent 16%),
+radial-gradient(circle at 88% 14%, rgba(141,185,255,.10), transparent 18%),
+radial-gradient(circle at 85% 78%, rgba(255,159,141,.08), transparent 18%),
+linear-gradient(180deg,#100e16 0%, #0b0a10 100%);overflow-x:hidden}
+body:before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.12;background-image:linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);background-size:34px 34px;mask-image:linear-gradient(180deg, rgba(0,0,0,.45), transparent)}
+a{color:inherit}
+.wrap{max-width:1340px;margin:0 auto;padding:0 28px}
+.nav{position:sticky;top:0;z-index:40;background:rgba(10,9,14,.76);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;justify-content:space-between;align-items:center;padding:16px 0;gap:18px}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none}
+.mark{width:54px;height:54px;border-radius:50%;background:radial-gradient(circle at 35% 30%, var(--gold2), var(--gold) 58%, #b7743a 100%);border:3px solid #3f2418;position:relative;box-shadow:0 14px 34px rgba(217,170,94,.24)}
+.mark:before,.mark:after{content:'';position:absolute;background:#3f2418;border-radius:50%}
+.mark:before{width:8px;height:8px;left:14px;top:18px;box-shadow:18px 0 0 #3f2418}
+.mark:after{width:22px;height:10px;left:13px;top:30px;border-bottom:4px solid #3f2418;border-radius:0 0 20px 20px;background:transparent}
+.brand-text strong{display:block;letter-spacing:.18em;font-size:13px}
+.brand-text span{display:block;font-size:11px;letter-spacing:.10em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.nav-links{display:flex;gap:22px;flex-wrap:wrap}
+.nav-links a{text-decoration:none;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.hero{padding:72px 0 28px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:stretch}
+.panel{background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));border:1px solid var(--line);border-radius:34px;box-shadow:var(--shadow)}
+.hero-copy{padding:38px;position:relative;overflow:hidden}
+.hero-copy:after{content:'';position:absolute;inset:auto -40px -40px auto;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle, rgba(217,170,94,.18), transparent 68%)}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--line);font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--gold2)}
+.eyebrow:before{content:'';width:8px;height:8px;border-radius:50%;background:linear-gradient(180deg,var(--gold2),var(--mint))}
+h1,h2,h3,h4{font-family:Georgia,'Times New Roman',serif;margin:0;line-height:.98}
+h1{font-size:clamp(54px,7vw,102px);margin:18px 0 18px;letter-spacing:-.05em}
+.grad{background:linear-gradient(135deg,var(--cream),var(--gold2) 35%, var(--mint) 75%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:720px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 20px;border-radius:999px;text-decoration:none;font-weight:900;border:1px solid var(--line)}
+.btn.primary{background:linear-gradient(135deg,#e8bc75,#f7ddb0);color:#24160e}
+.btn.secondary{background:rgba(255,255,255,.05);color:var(--text)}
+.hero-side{padding:26px;display:grid;grid-template-rows:auto 1fr;gap:18px}
+.mega-card{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;height:100%}
+.box-art{background:linear-gradient(180deg,#2f1c16,#1f1310);border:1px solid rgba(255,255,255,.06);border-radius:28px;padding:18px;position:relative;overflow:hidden}
+.box-art:before{content:'';position:absolute;inset:auto auto -60px -50px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle, rgba(245,211,152,.14), transparent 70%)}
+.lid{height:60px;border-radius:18px 18px 12px 12px;background:linear-gradient(180deg,#7c503a,#593527);position:relative;margin-bottom:14px}
+.lid:before{content:'HUNKY DUNKY';position:absolute;left:18px;top:20px;font-size:13px;font-weight:900;letter-spacing:.18em;color:#fff1de}
+.cookie-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.cookie{aspect-ratio:1;border-radius:50%;border:4px solid #4a2d20;box-shadow:inset 0 10px 18px rgba(255,255,255,.16), inset 0 -10px 18px rgba(0,0,0,.12);position:relative}
+.c1{background:radial-gradient(circle at 34% 28%, #f4d49e, #cf9656 64%, #ad6b34)}
+.c2{background:radial-gradient(circle at 34% 28%, #e6ba7a, #c98747 64%, #a6632f)}
+.c3{background:radial-gradient(circle at 34% 28%, #f6eadf, #d8c3af 64%, #b08e73)}
+.c4{background:radial-gradient(circle at 34% 28%, #eab983, #ce864f 64%, #ae6531)}
+.cookie span{position:absolute}
+.alm{width:18px;height:10px;background:#8b5a39;border-radius:999px;transform:rotate(32deg)}
+.dot{width:14px;height:14px;border-radius:50%;background:#4a2c1e}
+.oreo{width:14px;height:14px;border-radius:50%;background:#4b3328;box-shadow:0 0 0 4px #ebe0d4 inset}
+.swirl{border:3px solid rgba(90,52,35,.46);border-top-color:transparent;border-left-color:transparent;border-radius:50%}
+.side-stack{display:grid;gap:14px}
+.info-card{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:24px;padding:18px}
+.info-card .tag{display:inline-block;padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--gold2);margin-bottom:12px}
+.info-card p{margin:0;color:var(--muted);line-height:1.65}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px}
+.stat{padding:22px;border-radius:24px;background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));border:1px solid var(--line);box-shadow:var(--shadow)}
+.stat .k{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);font-weight:900}
+.stat .v{font-size:34px;font-weight:900;color:var(--gold2);margin-top:10px}
+section{padding:56px 0}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:24px}
+.section-head h2{font-size:48px;letter-spacing:-.04em}
+.section-head p{max-width:490px;color:var(--muted);line-height:1.7;margin:0}
+.grid-2{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.story-card{padding:28px}
+.story-card p{color:var(--muted);line-height:1.72}
+.kicker{font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--gold2);margin-bottom:10px}
+.thesis{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}
+.thesis .mini{padding:18px;border-radius:22px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.thesis .mini strong{display:block;font-size:34px;color:var(--gold2);margin-top:8px}
+.year-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.year-card{padding:22px;border-radius:26px;background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));border:1px solid var(--line)}
+.year-card h3{font-size:34px;margin:4px 0 18px}
+.mini-tag{display:inline-block;padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--mint)}
+.metric-row{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-top:1px solid rgba(255,255,255,.06)}
+.metric-row:first-of-type{border-top:none;padding-top:0}
+.metric-row span{color:var(--muted)}
+.metric-row strong{font-size:16px}
+.chart-card{padding:26px}
+.bar-chart{display:flex;align-items:end;gap:16px;height:340px;padding:18px 6px 0}
+.bar-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:12px}
+.bars{width:100%;max-width:120px;height:280px;display:flex;align-items:flex-end;justify-content:center;gap:10px}
+.bar{width:28px;border-radius:16px 16px 8px 8px;box-shadow:0 16px 30px rgba(0,0,0,.2)}
+.bar.income{background:linear-gradient(180deg, var(--gold2), var(--gold))}
+.bar.expense{background:linear-gradient(180deg, #8faeff, #5a77b2)}
+.bar.surplus{background:linear-gradient(180deg, #9ff0dc, #4fbca0)}
+.year-label{font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:12px;color:var(--muted);font-size:14px}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:12px;height:12px;border-radius:50%;display:inline-block}
+.line-wrap{padding:24px}
+svg{width:100%;height:auto}
+.line-bg{stroke:rgba(255,255,255,.08);stroke-width:1}
+.line-main{fill:none;stroke:url(#gradLine);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+.point{fill:var(--gold2)}
+svg text{fill:var(--muted);font-size:12px;font-family:Inter,system-ui,sans-serif}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse;border-spacing:0;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:26px;overflow:hidden}
+th,td{padding:16px 14px;border-bottom:1px solid rgba(255,255,255,.06);text-align:left;white-space:nowrap}
+th{background:rgba(255,255,255,.04);font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--gold2)}
+td{color:var(--cream)}
+td:first-child{color:var(--muted);font-weight:800}
+.relations{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.relation-card{padding:20px;border-radius:24px;background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));border:1px solid var(--line)}
+.rel-top{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--gold2);margin-bottom:12px}
+.relation-card p{margin:0;color:var(--muted);line-height:1.65}
+.footer{padding:0 0 68px}
+.footer-box{padding:34px;border-radius:34px;background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));border:1px solid var(--line);box-shadow:var(--shadow)}
+.footer-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+.footer-metrics .item{padding:18px;border-radius:22px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07)}
+.footer-metrics strong{display:block;color:var(--gold2);font-size:28px;margin-bottom:8px}
+.small{font-size:14px;color:var(--muted);line-height:1.7}
+@media (max-width:1180px){
+  .hero-grid,.grid-2,.grid-3,.grid-4,.year-grid,.relations,.footer-metrics,.stats,.thesis,.mega-card{grid-template-columns:1fr 1fr}
+}
+@media (max-width:760px){
+  .nav-inner,.section-head{flex-direction:column;align-items:flex-start}
+  .hero-grid,.grid-2,.grid-3,.grid-4,.year-grid,.relations,.footer-metrics,.stats,.thesis,.mega-card{grid-template-columns:1fr}
+  h1{font-size:56px}
+  .section-head h2{font-size:38px}
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top">
+      <div class="mark"></div>
+      <div class="brand-text"><strong>HUNKY DUNKY</strong><span>Investor Web • 2026–2030</span></div>
+    </a>
+    <div class="nav-links">
+      <a href="#tesis">Tesis</a>
+      <a href="#proyecciones">Proyecciones</a>
+      <a href="#macro">Macro</a>
+      <a href="#drivers">Drivers</a>
+      <a href="#cierre">Cierre</a>
+    </div>
+  </div>
+</nav>
+
+<header id="top" class="hero wrap">
+  <div class="hero-grid">
+    <div class="panel hero-copy">
+      <div class="eyebrow">Presupuesto actualizado • Fecha de evaluación 15 mayo 2026</div>
+      <h1>Una marca de antojo con una <span class="grad">proyección financieramente poderosa.</span></h1>
+      <p class="lead">Esta nueva web de inversionistas se reconstruye desde el presupuesto más actualizado de HUNKY DUNKY y se centra en tres ejes: resumen financiero 2026, proyecciones 2027–2030 e indicadores macroeconómicos que explican cómo evoluciona el negocio en el tiempo.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#proyecciones">Ver evolución 2026–2030</a>
+        <a class="btn secondary" href="#macro">Explorar indicadores</a>
+      </div>
+    </div>
+    <div class="panel hero-side">
+      <div class="mega-card">
+        <div class="box-art">
+          <div class="lid"></div>
+          <div class="cookie-grid">
+            <div class="cookie c1"><span class="alm" style="left:18px;top:20px"></span><span class="alm" style="left:58px;top:34px"></span><span class="alm" style="left:34px;top:70px"></span></div>
+            <div class="cookie c2"><span class="dot" style="left:18px;top:18px"></span><span class="dot" style="left:60px;top:28px"></span><span class="dot" style="left:34px;top:62px"></span><span class="dot" style="left:74px;top:74px"></span></div>
+            <div class="cookie c3"><span class="oreo" style="left:18px;top:22px"></span><span class="oreo" style="left:64px;top:34px"></span><span class="oreo" style="left:34px;top:72px"></span></div>
+            <div class="cookie c4"><span class="swirl" style="left:18px;top:22px;width:38px;height:38px"></span><span class="swirl" style="left:58px;top:56px;width:26px;height:26px"></span></div>
+          </div>
+        </div>
+        <div class="side-stack">
+          <div class="info-card"><div class="tag">Producto estrella</div><p>El proyecto presenta la caja Cookies x4 como su referencia principal y la usa como pieza insignia de la propuesta comercial.</p></div>
+          <div class="info-card"><div class="tag">Horizonte financiero</div><p>La proyección consolida un salto desde $1.872B en ingresos en 2026 hasta $3.285B en 2030, con mejora sostenida del margen.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="k">Ingresos 2026</div><div class="v">$1.872B</div></div>
+    <div class="stat"><div class="k">Excedentes 2026</div><div class="v">$0.570B</div></div>
+    <div class="stat"><div class="k">Ingresos 2030</div><div class="v">$3.285B</div></div>
+    <div class="stat"><div class="k">Margen 2030</div><div class="v">44.54%</div></div>
+  </div>
+</header>
+
+<section id="tesis">
+  <div class="wrap">
+    <div class="section-head">
+      <div><h2>La tesis de inversión cambia de escala.</h2></div>
+      <p>El nuevo concepto visual gira menos alrededor de una simple vitrina de marca y más alrededor de una narrativa de crecimiento: una marca premium con producto protagonista, motor comercial claro y lógica macroeconómica explícita.</p>
+    </div>
+    <div class="grid-2">
+      <div class="panel story-card">
+        <div class="kicker">Lectura ejecutiva</div>
+        <h3 style="font-size:40px;margin-bottom:14px">De una caja memorable a una compañía proyectada hasta 2030.</h3>
+        <p>El presupuesto actualizado muestra crecimiento en ingresos, expansión de excedentes y una evolución del margen desde 30.44% en 2026 hasta 44.54% en 2030. La historia deja de ser solo estética y pasa a ser financiera: HUNKY DUNKY crece con base en precios, volumen, costos y variables macro integradas.</p>
+        <div class="thesis">
+          <div class="mini"><div class="kicker">Ingresos 2026→2030</div><strong>75.48%</strong><span class="small">Crecimiento acumulado del horizonte completo.</span></div>
+          <div class="mini"><div class="kicker">Excedentes 2026→2030</div><strong>156.82%</strong><span class="small">Expansión acumulada del resultado disponible.</span></div>
+          <div class="mini"><div class="kicker">Margen</div><strong>+14.11 pp</strong><span class="small">Mejora del margen entre base y cierre del modelo.</span></div>
+        </div>
+      </div>
+      <div class="panel story-card">
+        <div class="kicker">Resumen 2026</div>
+        <h3 style="font-size:40px;margin-bottom:14px">La base ya es rentable.</h3>
+        <p>El año base 2026 arranca con ingresos por $1.872.056.951, egresos por $1.302.278.170, excedentes por $569.778.780 y margen de 30.44%. Desde ahí, el modelo plantea un crecimiento anual sostenido y una convergencia hacia un margen superior al 40% a partir de 2029.</p>
+        <div class="grid-2" style="margin-top:18px">
+          <div class="info-card"><div class="tag">2027</div><p>Ingresos $2.403B y margen de 37.19%.</p></div>
+          <div class="info-card"><div class="tag">2028</div><p>Ingresos $2.704B y margen de 37.92%.</p></div>
+          <div class="info-card"><div class="tag">2029</div><p>Ingresos $3.029B y margen de 40.22%.</p></div>
+          <div class="info-card"><div class="tag">2030</div><p>Ingresos $3.285B y margen de 44.54%.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="proyecciones">
+  <div class="wrap">
+    <div class="section-head">
+      <div><h2>Proyecciones 2026–2030.</h2></div>
+      <p>El resumen general consolida ingresos, egresos, excedentes y variaciones anuales en una secuencia que muestra crecimiento sostenido con desaceleración razonable del ritmo de ingresos y una expansión más fuerte del excedente.</p>
+    </div>
+    <div class="year-grid">
+    <article class="year-card">
+      <div class="mini-tag">Base</div>
+      <h3>2026</h3>
+      <div class="metric-row"><span>Ingresos</span><strong>$1.872B</strong></div>
+      <div class="metric-row"><span>Egresos</span><strong>$1.302B</strong></div>
+      <div class="metric-row"><span>Excedentes</span><strong>$0.570B</strong></div>
+      <div class="metric-row"><span>Margen</span><strong>30.44%</strong></div>
+    </article>
+    
+    <article class="year-card">
+      <div class="mini-tag">Ingresos 28.37%</div>
+      <h3>2027</h3>
+      <div class="metric-row"><span>Ingresos</span><strong>$2.403B</strong></div>
+      <div class="metric-row"><span>Egresos</span><strong>$1.509B</strong></div>
+      <div class="metric-row"><span>Excedentes</span><strong>$0.894B</strong></div>
+      <div class="metric-row"><span>Margen</span><strong>37.19%</strong></div>
+    </article>
+    
+    <article class="year-card">
+      <div class="mini-tag">Ingresos 12.54%</div>
+      <h3>2028</h3>
+      <div class="metric-row"><span>Ingresos</span><strong>$2.704B</strong></div>
+      <div class="metric-row"><span>Egresos</span><strong>$1.679B</strong></div>
+      <div class="metric-row"><span>Excedentes</span><strong>$1.025B</strong></div>
+      <div class="metric-row"><span>Margen</span><strong>37.92%</strong></div>
+    </article>
+    
+    <article class="year-card">
+      <div class="mini-tag">Ingresos 11.99%</div>
+      <h3>2029</h3>
+      <div class="metric-row"><span>Ingresos</span><strong>$3.029B</strong></div>
+      <div class="metric-row"><span>Egresos</span><strong>$1.811B</strong></div>
+      <div class="metric-row"><span>Excedentes</span><strong>$1.218B</strong></div>
+      <div class="metric-row"><span>Margen</span><strong>40.22%</strong></div>
+    </article>
+    
+    <article class="year-card">
+      <div class="mini-tag">Ingresos 8.47%</div>
+      <h3>2030</h3>
+      <div class="metric-row"><span>Ingresos</span><strong>$3.285B</strong></div>
+      <div class="metric-row"><span>Egresos</span><strong>$1.822B</strong></div>
+      <div class="metric-row"><span>Excedentes</span><strong>$1.463B</strong></div>
+      <div class="metric-row"><span>Margen</span><strong>44.54%</strong></div>
+    </article>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="grid-2">
+      <div class="panel chart-card">
+        <div class="kicker">Escala financiera</div>
+        <h3 style="font-size:38px;margin-bottom:8px">Ingresos, egresos y excedentes por año.</h3>
+        <div class="bar-chart">
+    <div class="bar-group">
+      <div class="bars">
+        <div class="bar income" style="height:56.99%"></div>
+        <div class="bar expense" style="height:39.64%"></div>
+        <div class="bar surplus" style="height:17.34%"></div>
+      </div>
+      <div class="year-label">2026</div>
+    </div>
+    
+    <div class="bar-group">
+      <div class="bars">
+        <div class="bar income" style="height:73.15%"></div>
+        <div class="bar expense" style="height:45.95%"></div>
+        <div class="bar surplus" style="height:27.21%"></div>
+      </div>
+      <div class="year-label">2027</div>
+    </div>
+    
+    <div class="bar-group">
+      <div class="bars">
+        <div class="bar income" style="height:82.32%"></div>
+        <div class="bar expense" style="height:51.11%"></div>
+        <div class="bar surplus" style="height:31.21%"></div>
+      </div>
+      <div class="year-label">2028</div>
+    </div>
+    
+    <div class="bar-group">
+      <div class="bars">
+        <div class="bar income" style="height:92.19%"></div>
+        <div class="bar expense" style="height:55.11%"></div>
+        <div class="bar surplus" style="height:37.07%"></div>
+      </div>
+      <div class="year-label">2029</div>
+    </div>
+    
+    <div class="bar-group">
+      <div class="bars">
+        <div class="bar income" style="height:100.00%"></div>
+        <div class="bar expense" style="height:55.46%"></div>
+        <div class="bar surplus" style="height:44.54%"></div>
+      </div>
+      <div class="year-label">2030</div>
+    </div>
+    </div>
+        <div class="legend">
+          <span><i style="background:linear-gradient(180deg, var(--gold2), var(--gold))"></i>Ingresos</span>
+          <span><i style="background:linear-gradient(180deg, #8faeff, #5a77b2)"></i>Egresos</span>
+          <span><i style="background:linear-gradient(180deg, #9ff0dc, #4fbca0)"></i>Excedentes</span>
+        </div>
+      </div>
+      <div class="panel line-wrap">
+        <div class="kicker">Rentabilidad</div>
+        <h3 style="font-size:38px;margin-bottom:10px">Trayectoria del margen.</h3>
+        <svg viewBox="0 0 760 280" role="img" aria-label="Margen 2026 a 2030">
+          <defs>
+            <linearGradient id="gradLine" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#f5d398"/>
+              <stop offset="100%" stop-color="#8fe7d4"/>
+            </linearGradient>
+          </defs>
+          <line class="line-bg" x1="40" y1="220" x2="720" y2="220"></line>
+          <line class="line-bg" x1="40" y1="155" x2="720" y2="155"></line>
+          <line class="line-bg" x1="40" y1="90" x2="720" y2="90"></line>
+          <path class="line-main" d="M 40.0 220.0 L 210.0 157.8 L 380.0 151.1 L 550.0 129.9 L 720.0 90.0"></path>
+          <g class="point"><circle cx="40.0" cy="220.0" r="7" /><circle cx="210.0" cy="157.8" r="7" /><circle cx="380.0" cy="151.1" r="7" /><circle cx="550.0" cy="129.9" r="7" /><circle cx="720.0" cy="90.0" r="7" /></g>
+          <text x="40.0" y="255" text-anchor="middle">2026</text><text x="40.0" y="206.0" text-anchor="middle">30.44%</text><text x="210.0" y="255" text-anchor="middle">2027</text><text x="210.0" y="143.8" text-anchor="middle">37.19%</text><text x="380.0" y="255" text-anchor="middle">2028</text><text x="380.0" y="137.1" text-anchor="middle">37.92%</text><text x="550.0" y="255" text-anchor="middle">2029</text><text x="550.0" y="115.9" text-anchor="middle">40.22%</text><text x="720.0" y="255" text-anchor="middle">2030</text><text x="720.0" y="76.0" text-anchor="middle">44.54%</text>
+        </svg>
+        <p class="small">El margen sube desde 30.44% en 2026 a 44.54% en 2030, y el umbral del 40% aparece ya en 2029.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="macro">
+  <div class="wrap">
+    <div class="section-head">
+      <div><h2>Indicadores macroeconómicos.</h2></div>
+      <p>El archivo actualiza la base macro con IPC, IPP, variación TRM, aumento del salario mínimo y crecimiento del PIB para explicar la evolución de costos, precios y demanda entre 2026 y 2030.</p>
+    </div>
+    <div class="panel story-card table-wrap">
+      <table>
+        <thead>
+          <tr><th>Indicador</th><th>2026</th><th>2027</th><th>2028</th><th>2029</th><th>2030</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>IPC</td><td>5.70%</td><td>3.80%</td><td>4.20%</td><td>3.50%</td><td>3.10%</td></tr><tr><td>IPP</td><td>4.50%</td><td>4.10%</td><td>3.60%</td><td>4.00%</td><td>3.20%</td></tr><tr><td>Variación TRM</td><td>8.00%</td><td>4.50%</td><td>2.00%</td><td>3.80%</td><td>1.50%</td></tr><tr><td>Aumento salario mínimo</td><td>23.00%</td><td>8.50%</td><td>7.00%</td><td>6.20%</td><td>5.80%</td></tr><tr><td>Crecimiento PIB</td><td>2.50%</td><td>2.80%</td><td>3.00%</td><td>3.20%</td><td>3.30%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="drivers">
+  <div class="wrap">
+    <div class="section-head">
+      <div><h2>Drivers de la proyección.</h2></div>
+      <p>La hoja de indicadores no solo muestra valores; también explica relaciones directas e indirectas entre dólar, inflación, salarios, tasas, PIB y rentabilidad empresarial.</p>
+    </div>
+    <div class="relations"><div class="relation-card"><div class="rel-top"><span>TRM</span><b>Directa</b><span>IPP</span></div><p>Si sube el dólar, aumentan los costos de importación y producción.</p></div><div class="relation-card"><div class="rel-top"><span>TRM</span><b>Indirecta</b><span>IPC</span></div><p>El aumento del dólar primero afecta producción y luego precios al consumidor.</p></div><div class="relation-card"><div class="rel-top"><span>IPP</span><b>Directa</b><span>IPC</span></div><p>Si producir cuesta más, los precios al consumidor también suben.</p></div><div class="relation-card"><div class="rel-top"><span>IPC</span><b>Directa</b><span>Salario mínimo</span></div><p>El salario mínimo se ajusta principalmente según inflación.</p></div><div class="relation-card"><div class="rel-top"><span>Tasas de interés</span><b>Indirecta</b><span>PIB</span></div><p>Tasas altas reducen inversión y crecimiento económico.</p></div><div class="relation-card"><div class="rel-top"><span>PIB</span><b>Directa</b><span>Ventas empresariales</span></div><p>Mayor crecimiento económico suele aumentar demanda.</p></div><div class="relation-card"><div class="rel-top"><span>IPP</span><b>Indirecta</b><span>Rentabilidad empresarial</span></div><p>Costos de producción más altos reducen márgenes.</p></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div><h2>Lecturas clave del resumen general.</h2></div>
+      <p>La tabla agregada de 2026 a 2030 confirma que el negocio acelera el excedente más rápido que los egresos y llega a una estructura mucho más eficiente al final del horizonte.</p>
+    </div>
+    <div class="grid-3">
+      <div class="panel story-card"><div class="kicker">Ingresos</div><h3 style="font-size:36px;margin-bottom:10px">Ritmo alto, luego más maduro.</h3><p>Los ingresos crecen 28.37% de 2026 a 2027, luego 12.54% en 2028, 11.99% en 2029 y 8.47% en 2030. La secuencia sugiere expansión sostenida con una curva más realista y menos explosiva al final.</p></div>
+      <div class="panel story-card"><div class="kicker">Egresos</div><h3 style="font-size:36px;margin-bottom:10px">Presión controlada.</h3><p>Los egresos siguen creciendo, pero el ritmo baja desde 15.90% entre 2026 y 2027 a solo 0.62% entre 2029 y 2030. Ese desacople ayuda a liberar rentabilidad y fortalece la lógica del modelo.</p></div>
+      <div class="panel story-card"><div class="kicker">Excedentes</div><h3 style="font-size:36px;margin-bottom:10px">La señal más potente.</h3><p>El excedente sube 56.85% entre 2026 y 2027, 14.73% en 2028, 18.78% en 2029 y 20.14% en 2030. La empresa gana escala y convierte mejor el crecimiento en resultado.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer id="cierre" class="footer wrap">
+  <div class="footer-box">
+    <div class="kicker">Cierre para inversionistas</div>
+    <h2 style="font-size:54px;margin-bottom:14px">HUNKY DUNKY ya no se ve como una idea; se ve como una compañía proyectada.</h2>
+    <p class="small">Con el presupuesto actualizado, la conversación cambia: hay un año base rentable, indicadores macro que justifican la evolución de precios y costos, y una proyección que lleva al negocio desde $1.872B en ingresos y 30.44% de margen en 2026 hasta $3.285B y 44.54% en 2030.</p>
+    <div class="footer-metrics">
+      <div class="item"><strong>$1.463B</strong><span class="small">Excedentes proyectados en 2030.</span></div>
+      <div class="item"><strong>75.48%</strong><span class="small">Crecimiento acumulado de ingresos entre 2026 y 2030.</span></div>
+      <div class="item"><strong>44.54%</strong><span class="small">Margen estimado al cierre del horizonte.</span></div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
